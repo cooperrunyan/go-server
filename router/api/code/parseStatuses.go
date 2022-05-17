@@ -1,13 +1,12 @@
-package util
+package code
 
 import (
 	"fmt"
-	"http/types"
 
 	"github.com/gin-gonic/gin"
 )
 
-func ParseStatuses(statuses map[int]types.StatusCode) gin.H {
+func parseStatuses(statuses map[int]StatusCode) gin.H {
 	var d gin.H = gin.H{}
 
 	for code, data := range statuses {

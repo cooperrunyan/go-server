@@ -2,10 +2,16 @@ version: '3.7'
 
 services:
   api:
+    restart: always
+    tty: true
     build:
       context: .
       dockerfile: dockerfile
+      target: dev
       args:
         port: ${PORT}
     volumes:
       - .:/app
+    ports:
+      - ${PORT}:${PORT}
+    command: go run .

@@ -1,9 +1,8 @@
-package util
+package code
 
-import "http/types"
 
-func GetStatuses() map[int]types.StatusCode {
-	s := map[int]types.StatusCode{
+func getStatuses() map[int]StatusCode {
+	s := map[int]StatusCode{
    100: {
 			Code: 100,
 			Phrase: "Continue",

@@ -1,15 +1,14 @@
-package util
+package code
 
 import (
 	"fmt"
-	"http/types"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-func GenerateGroups() (gin.H, map[string]map[int]types.StatusCode) {
-	gs := map[string]map[int]types.StatusCode {
+func generateGroups() (gin.H, map[string]map[int]StatusCode) {
+	gs := map[string]map[int]StatusCode {
 		"100": {},
 		"200": {},
 		"300": {},
@@ -17,7 +16,7 @@ func GenerateGroups() (gin.H, map[string]map[int]types.StatusCode) {
 		"500": {},
 	}
 
-	for c, d := range GetStatuses() {
+	for c, d := range getStatuses() {
 		s := strings.Split(fmt.Sprint(c), "")[0] + "00"
 
 		gs[s][c] = d
@@ -27,7 +26,7 @@ func GenerateGroups() (gin.H, map[string]map[int]types.StatusCode) {
 
 	for sl, g := range gs {
 		d[sl] = gin.H {
-			"codes": ParseStatuses(g),
+			"codes": parseStatuses(g),
 		}
 	}
 

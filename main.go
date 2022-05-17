@@ -1,18 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"http/router"
-	"os"
-	"strings"
+	"http/utils"
 )
 
 func main() {
 	r := router.Init()
-	p := "3000"
-	for _, e := range os.Environ() {
-		pair := strings.Split(e, "=")
-		if pair[0] == "PORT" { p = pair[1] }
-	}
-
-	r.Run("0.0.0.0:" + p)
+  e := r.Run("0.0.0.0:" + utils.GetPort())
+	if e != nil {fmt.Println(e)}
 }

@@ -1,16 +1,15 @@
-FROM golang:1.18.2-alpine
+FROM golang:1.18.2-alpine as dev
+
+RUN apk update; apk add curl
 
 ARG port
-
-WORKDIR /app
-
-COPY . .
-
-RUN go get -d -v .
-
-RUN go install -v .
-
 EXPOSE ${port}
 ENV PORT=${port}
 
-CMD ["http"]
+WORKDIR /app
+
+ADD . .
+RUN go get -d -v .
+
+FROM dev as prod
+RUN go install -v .

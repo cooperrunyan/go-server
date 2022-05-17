@@ -1,23 +1,22 @@
-package api
+package code
 
 import (
-	"http/util"
 	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-func Code(g *gin.Engine) {
+func Router(g *gin.Engine) {
 	c := g.Group("/code")
 
 	c.GET("/", func(c *gin.Context) {
-		c.JSON(200, util.ParseStatuses(util.GetStatuses()))
+		c.JSON(200, parseStatuses(getStatuses()))
 	})
 
 	c.GET("/list", func(c *gin.Context) {
 	  d := map[int]string{}
-		for c, data := range util.GetStatuses() {
+		for c, data := range getStatuses() {
 			d[c] = data.Phrase
 		}
 
@@ -25,13 +24,13 @@ func Code(g *gin.Engine) {
 	})
 
 	c.GET("/group", func(c *gin.Context) {
-		d, _ := util.GenerateGroups();
+		d, _ := generateGroups();
 		c.JSON(200, d)
 	})
 
 	c.GET("/group/:group", func(c *gin.Context) {
 		g := strings.Split(c.Param("group"), "")[0]
-		_, gs := util.GenerateGroups();
+		_, gs := generateGroups();
 
 		num, err := strconv.Atoi(g)
 
@@ -64,7 +63,7 @@ func Code(g *gin.Engine) {
 			return
 		}
 
-		d := util.GetStatuses()[code]
+		d := getStatuses()[code]
 
 		if d.Phrase == "" {
 			c.JSON(400, gin.H {
@@ -98,7 +97,7 @@ func Code(g *gin.Engine) {
 			return
 		}
 
-		d := util.GetStatuses()[code]
+		d := getStatuses()[code]
 
 		if d.Phrase == "" {
 			c.JSON(400, gin.H {
@@ -111,7 +110,7 @@ func Code(g *gin.Engine) {
 		c.JSON(code, gin.H {
 			"ok": true,
 			"code": code,
-			"message": util.GetStatuses()[code].Description,
+			"message": getStatuses()[code].Description,
 		})
 	})
 }

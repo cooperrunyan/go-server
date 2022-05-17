@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  api:
+    restart: always
+    tty: true
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: prod
+      args:
+        port: ${PORT}
+    volumes:
+      - .:/app
+    environment:
+      - GIN_MODE=release
+    ports:
+      - ${PORT}:${PORT}
+    command: http
