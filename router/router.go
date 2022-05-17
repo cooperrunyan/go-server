@@ -13,12 +13,7 @@ func Init() *gin.Engine {
 	use(g, api.Echo)
 	use(g, code.Router)
 	use(g, api.Proxy)
-
-	g.GET("/", func (c *gin.Context) {
-		c.JSON(200, gin.H{
-			"status": "Running",
-		})
-	})
+	use(g, api.Ping)
 
 	return g
 }
