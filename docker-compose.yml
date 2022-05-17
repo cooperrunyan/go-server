@@ -5,5 +5,7 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    ports:
-      - 3000:3000
+      args:
+        port: ${PORT}
+    volumes:
+      - .:/app
