@@ -12,11 +12,11 @@ func Proxy(g *gin.Engine) {
 	e := g.Group("/proxy")
 
 	e.Any("/", func(c *gin.Context) {
-		u := c.Request.URL.Query()["url"][0]
+		u := c.Request.URL.Query()["u"][0]
 
 		if u == "" {
 			c.JSON(400, gin.H {
-				"message": "Send the url endpoint as a query param under the value: 'url'",
+				"message": "Send the url endpoint as a query param under the value: 'u'",
 			})
 			return
 		}
