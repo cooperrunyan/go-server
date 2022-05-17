@@ -15,7 +15,7 @@ func Proxy(g *gin.Engine) {
 		u := c.Request.URL.Query()["u"][0]
 
 		if u == "" {
-			c.JSON(400, gin.H {
+			c.SecureJSON(400, gin.H {
 				"message": "Send the url endpoint as a query param under the value: 'u'",
 			})
 			return
@@ -23,7 +23,7 @@ func Proxy(g *gin.Engine) {
 
 		remote, err := url.Parse(u)
 		if err != nil {
-				c.JSON(400, gin.H {
+				c.SecureJSON(400, gin.H {
 				"message": "Not a valid url",
 				"error": err,
 			})

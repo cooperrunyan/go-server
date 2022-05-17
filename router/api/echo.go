@@ -1,7 +1,7 @@
 package api
 
 import (
-	"io/ioutil"
+	"io"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,11 +19,11 @@ func Echo(g *gin.Engine) {
 		var d []byte
 
 		if c.Request.ContentLength > 0 {
-			j, err := ioutil.ReadAll(c.Request.Body)
+			j, err := io.ReadAll(c.Request.Body)
 			d = j
 
 			if err != nil {
-				c.JSON(500, gin.H {
+				c.SecureJSON(500, gin.H {
 					"status": "error",
 					"message": "Error parsing request body",
 				})
@@ -49,6 +49,6 @@ func Echo(g *gin.Engine) {
 			"requestURI": c.Request.RequestURI,
 		}
 
-		c.JSON(200, r)
+		c.SecureJSON(200, r)
 	})
 }
