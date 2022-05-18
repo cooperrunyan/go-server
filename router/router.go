@@ -2,8 +2,10 @@ package router
 
 import (
 	"http/middleware"
-	"http/router/api"
 	"http/router/api/code"
+	"http/router/api/echo"
+	"http/router/api/ping"
+	"http/router/api/proxy"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,13 +13,13 @@ import (
 func Init() *gin.Engine {
 	r := gin.Default()
 
-	useRoute(r, api.Proxy)
+	useRoute(r, proxy.ProxyRoute)
 
 	r.Use(middleware.Cors())
 
-	useRoute(r, api.Echo)
-	useRoute(r, code.Router)
-	useRoute(r, api.Ping)
+	useRoute(r, echo.EchoRoute)
+	useRoute(r, code.CodeRoute)
+	useRoute(r, ping.PingRoute)
 
 	return r
 }

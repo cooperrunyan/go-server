@@ -1,4 +1,4 @@
-package api
+package proxy
 
 import (
 	"net/http"
@@ -10,7 +10,7 @@ import (
 
 const urlParamName = "u"
 
-func Proxy(g *gin.Engine) {
+func ProxyRoute(g *gin.Engine) {
 	g.Any("/proxy", func(c *gin.Context) {
 		u := c.Request.URL.Query()[urlParamName][0]
 

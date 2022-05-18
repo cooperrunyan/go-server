@@ -1,4 +1,4 @@
-package api
+package echo
 
 import (
 	"io"
@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Echo(g *gin.Engine) {
+func EchoRoute(g *gin.Engine) {
 	g.Any("/echo", func(c *gin.Context) {
 		a := map[string]string{}
 		for k, v := range c.Request.URL.Query() { a[k] = v[0] }

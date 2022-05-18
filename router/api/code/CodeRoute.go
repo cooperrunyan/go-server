@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Router(g *gin.Engine) {
+func CodeRoute(g *gin.Engine) {
 	c := g.Group("/code")
 
 	c.GET("/", func(c *gin.Context) {
