@@ -7,9 +7,7 @@ import (
 )
 
 func Echo(g *gin.Engine) {
-	e := g.Group("/echo")
-
-	e.Any("/", func(c *gin.Context) {
+	g.Any("/echo", func(c *gin.Context) {
 		a := map[string]string{}
 		for k, v := range c.Request.URL.Query() { a[k] = v[0] }
 

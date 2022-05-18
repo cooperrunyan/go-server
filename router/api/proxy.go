@@ -8,15 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Proxy(g *gin.Engine) {
-	e := g.Group("/proxy")
+const urlParamName = "u"
 
-	e.Any("/", func(c *gin.Context) {
-		u := c.Request.URL.Query()["u"][0]
+func Proxy(g *gin.Engine) {
+	g.Any("/proxy", func(c *gin.Context) {
+		u := c.Request.URL.Query()[urlParamName][0]
 
 		if u == "" {
 			c.SecureJSON(400, gin.H {
-				"message": "Send the url endpoint as a query param under the value: 'u'",
+				"message": `Send the url endpoint as a query param under the value: '{{urlParamName}}'`,
 			})
 			return
 		}
@@ -34,9 +34,10 @@ func Proxy(g *gin.Engine) {
 		proxy.Director = func(req *http.Request) {
 			req.Header = c.Request.Header
 			req.Host = remote.Host
-			req.URL.Scheme = remote.Scheme
-			req.URL.Host = remote.Host
-			req.URL.Path = remote.Path
+			req.Method = c.Request.Method
+			req.URL = remote
+
+			if c.Request.Method != "GET" {req.Body = c.Request.Body}
 		}
 
 		proxy.ServeHTTP(c.Writer, c.Request)

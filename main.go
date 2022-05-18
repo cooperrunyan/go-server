@@ -8,6 +8,7 @@ import (
 
 func main() {
 	r := router.Init()
-  e := r.Run("0.0.0.0:" + utils.GetPort())
+
+  e := r.Run(":" + utils.GetPort())
 	if e != nil {fmt.Println(e)}
 }

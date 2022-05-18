@@ -10,8 +10,6 @@ services:
       target: prod
       args:
         port: ${PORT}
-    volumes:
-      - .:/app
     environment:
       - GIN_MODE=release
     ports:

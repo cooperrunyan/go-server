@@ -1,6 +1,7 @@
 package router
 
 import (
+	"http/middleware"
 	"http/router/api"
 	"http/router/api/code"
 
@@ -8,14 +9,17 @@ import (
 )
 
 func Init() *gin.Engine {
-	g := gin.Default()
+	r := gin.Default()
 
-	use(g, api.Echo)
-	use(g, code.Router)
-	use(g, api.Proxy)
-	use(g, api.Ping)
+	useRoute(r, api.Proxy)
 
-	return g
+	r.Use(middleware.Cors())
+
+	useRoute(r, api.Echo)
+	useRoute(r, code.Router)
+	useRoute(r, api.Ping)
+
+	return r
 }
 
-func use(g *gin.Engine, h func(*gin.Engine)) { h(g) }
+func useRoute(r *gin.Engine, h func(*gin.Engine)) { h(r) }
