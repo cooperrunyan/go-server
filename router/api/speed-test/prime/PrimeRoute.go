@@ -18,16 +18,15 @@ func PrimeRoute(g *gin.RouterGroup) {
 		}
 
 		start := time.Now()
-		ps := SpeedTest(int32(to))
+		ps := SieveOfEratosthenes(to)
 		elapsed := time.Since(start).String()
 
 		res := gin.H {
-			"numbersTested": gin.H {
-				"start": 0,
-				"to": to,
+			"data": gin.H {
+				"tested": to,
+				"amount": len(ps),
+				"elapsedTime": elapsed,
 			},
-			"elapsedTime": elapsed,
-			"amount": len(ps),
 		}
 
 		if incl == "true" {res["results"] = ps}
@@ -36,20 +35,14 @@ func PrimeRoute(g *gin.RouterGroup) {
 	})
 }
 
-func SpeedTest(to int32) []int32 {
-	p := []int32{}
-
-	for i := int32(0); i < to; i++ {
-		if prime(i) {p = append(p, i)}
+func SieveOfEratosthenes(to int) []int {
+	f := make([]bool, to)
+	ps := []int{}
+	for i := 2; i <= int(math.Sqrt(float64(to))); i++ {
+		if !f[i] {
+			for j := i * i; j < to; j += i { f[j] = true }
+		}
 	}
-	return p
+	for i := 2; i < to; i++ { if !f[i] { ps = append(ps, i) } }
+	return ps
 }
-
-func prime(n int32) bool {
-	sqrt := int(math.Sqrt(float64(n)))
-	for i := 2; i <= sqrt; i++ {
-		if int(n) % i == 0 {return false}
-	}
-	return true
-}
-
